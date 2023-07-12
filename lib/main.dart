@@ -67,7 +67,7 @@ class _loginState extends State<_login> {
   LocaleString tr =  LocaleString();
     late Locale language= const Locale('es', 'MX');
 
-      
+        final _claveFormulario = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -79,71 +79,91 @@ class _loginState extends State<_login> {
           backgroundColor: Colors.purple,
           centerTitle: true,
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            margin: const EdgeInsets.only(left: 50, right: 50),
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              const SizedBox(
-                height: 10,
-              ),
-              const Image(
-                image: AssetImage('assets/logob.jpg'),
-                alignment: Alignment.topRight,
-                height: 100,
-              ),
-              const SizedBox(height: 120),
-              TextField(
-                controller: email,
-                keyboardType: TextInputType.number,
-                style: TextStyle(
-                  color: Colors.cyanAccent[700],
+        body: Form(
+          key: _claveFormulario,
+          child: SingleChildScrollView(
+            child: Container(
+              margin: const EdgeInsets.only(left: 50, right: 50),
+              child:
+                  Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                const SizedBox(
+                  height: 10,
                 ),
-                decoration: InputDecoration(
-                  enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(width: 3, color: Colors.purple)),
-                  hintText: tr.user,
-                  fillColor: Colors.black87,
-                  hintStyle: TextStyle(
+                const Image(
+                  image: AssetImage('assets/logob.jpg'),
+                  alignment: Alignment.topRight,
+                  height: 100,
+                ),
+                const SizedBox(height: 120),
+                TextFormField(
+                  controller: email,
+                   validator: (value) {
+            if (value!.isEmpty) {
+              return 'Ingresa codigo de usuario';
+            }
+            return null;
+          },
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(
                     color: Colors.cyanAccent[700],
-                    fontSize: 20,
                   ),
-                ),
-              ),
-              const SizedBox(height: 60),
-              TextField(
-                controller: password,
-                obscureText: true,
-                decoration: InputDecoration(
+                  decoration: InputDecoration(
                     enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 3,
-                        color: Colors.purple,
-                      ),
+                        borderSide: BorderSide(width: 3, color: Colors.purple)),
+                    hintText: tr.user,
+                    fillColor: Colors.black87,
+                    hintStyle: TextStyle(
+                      color: Colors.cyanAccent[700],
+                      fontSize: 20,
                     ),
-                    hintText: tr.contra,
-                    hintStyle:
-                        TextStyle(color: Colors.cyanAccent[700], fontSize: 20)),
-              ),
-              const SizedBox(height: 70),
-              SizedBox(
-                width: double.infinity,
-                child: RaisedButton(
-                  disabledColor: Colors.amber,
-                  child:  Text(
-                    tr.ingr,
-                    style:const  TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w900),
                   ),
-                  splashColor: Colors.amber,
-                  color: Colors.purple,
-                  onPressed: () async{
-                    Conexion con = Conexion();
-                   var valor= con.verificarConexion(context, email.text, password.text);
-                  },
                 ),
-              ),
-            ]),
+                const SizedBox(height: 60),
+                TextFormField(
+                   validator: (value) {
+            if (value!.isEmpty) {
+              return 'Ingresa contraseña';
+            }
+            return null;
+          },
+                  controller: password,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 3,
+                          color: Colors.purple,
+                        ),
+                      ),
+                      hintText: tr.contra,
+                      hintStyle:
+                          TextStyle(color: Colors.cyanAccent[700], fontSize: 20)),
+                ),
+                const SizedBox(height: 70),
+                SizedBox(
+                  width: double.infinity,
+                  child: RaisedButton(
+                    disabledColor: Colors.amber,
+                    child:  Text(
+                      tr.ingr,
+                      style:const  TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w900),
+                    ),
+                    splashColor: Colors.amber,
+                    color: Colors.purple,
+                    onPressed: () async{
+                        if (!_claveFormulario.currentState!.validate()) {
+                    return;
+                  }else{
+                       Conexion con = Conexion();
+                     var valor= con.verificarConexion(context, email.text, password.text);
+                  }
+                   
+                    },
+                  ),
+                ),
+              ]),
+            ),
           ),
         ),
       ),

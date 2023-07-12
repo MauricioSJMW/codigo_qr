@@ -19,7 +19,7 @@ class MainControlador{
   var  datoss = json.decode(datos);
     if (datoss['usuario'] == "err") {
       Errores errorLogin = Errores();
-      errorLogin.loginError(context);
+      errorLogin.showAlertDialog2(context);
     } else {
       UserPrefereces user =  UserPrefereces();
       user.inicioSecion(datoss['usuario'], datoss['razonSocial']);

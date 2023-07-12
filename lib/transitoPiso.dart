@@ -81,7 +81,7 @@ class _loginState extends State<_login> {
               Text(
                 titulo,
                 style: const TextStyle(
-                  fontSize: 30,
+                  fontSize: 25,
                   fontWeight: FontWeight.w800,
                 ),
                 textAlign: TextAlign.center,
@@ -95,7 +95,7 @@ class _loginState extends State<_login> {
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 100),
+              const SizedBox(height: 60),
                Text(
                 tr.escanerQr,
                 style: const TextStyle(

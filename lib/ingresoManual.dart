@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use, no_leading_underscores_for_local_identifiers, file_names
+// ignore_for_file: deprecated_member_use, no_leading_underscores_for_local_identifiers, file_names, prefer_interpolation_to_compose_strings
 
 import 'package:codigo_qr/LocalString/localString.dart';
 import 'package:codigo_qr/transitoPiso.dart';
@@ -7,8 +7,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'controladores/ingresoManualControlador.dart';
 
+// ignore: must_be_immutable
 class IngresoManual extends StatelessWidget {
-  const IngresoManual({Key? key}) : super(key: key);
+   // ignore: use_key_in_widget_constructors
+   IngresoManual({Key? key, required this.datoss,});
+
+  // ignore: prefer_typing_uninitialized_variables
+   var datoss;
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +22,15 @@ class IngresoManual extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const _login(),
+      home:  _login(datos2: datoss,),
     );
   }
 }
 
 // ignore: camel_case_types
 class _login extends StatefulWidget {
-  const _login({Key? key}) : super(key: key);
+   _login({Key? key, required this.datos2,});
+  var datos2;
   @override
   _loginState createState() => _loginState();
 }
@@ -51,22 +57,11 @@ class _loginState extends State<_login> {
   }
 
   datosTaller() async {
-    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-    SharedPreferences prefs = await _prefs;
+    
+    // ignore: duplicate_ignore
     setState(() {
-      idExpediente = prefs.getString('idExpediente')!;
-      codRamo = prefs.getString('codRamo')!;
-      ejercicios = prefs.getString('ejercicio')!;
-      numReporte = prefs.getString('numReporte')!;
-      idRiesgo = prefs.getString('idRiesgo')!;
-      marca = prefs.getString('marca')!;
-      tipo = prefs.getString('tipo')!;
-      modelo = prefs.getString('modelo')!;
-      razonSocial = prefs.getString('razonSocial')!;
-      piso = prefs.getString('piso')!;
-      transito = prefs.getString('transito')!;
-      reporteCompleto = "Reporte:$codRamo $ejercicios $numReporte $idRiesgo";
-      unidadCompleta = "Unidad: $marca $tipo $modelo";
+      reporteCompleto = "${"Reporte: "+widget.datos2[0]['codRamo']+" "+widget.datos2[0]['ejercicio']+" "+widget.datos2[0]['numReporte']} "+widget.datos2[0]['idRiesgo'];
+      unidadCompleta = "${"Unidad: "+widget.datos2[0]['marca']+" "+widget.datos2[0]['tipo']} "+widget.datos2[0]['modelo'];
     });
   }
 
@@ -173,7 +168,7 @@ class _loginState extends State<_login> {
                     color: Colors.purple,
                     onPressed: () {
                       IngresoManualControlador transito =  IngresoManualControlador();
-                      transito.adjudicar(idExpediente, "1", piso, context);
+                      transito.adjudicar(widget.datos2[0]['idExpediente'], "1", widget.datos2[0]['piso'].toString(), context);
                     },
                   ),
                   const SizedBox(
@@ -193,7 +188,7 @@ class _loginState extends State<_login> {
                     color: Colors.purple,
                     onPressed: () {
                       IngresoManualControlador transito =  IngresoManualControlador();
-                      transito.adjudicar(idExpediente, transito, "1", context);
+                      transito.adjudicar(widget.datos2[0]['idExpediente'].toString(), widget.datos2[0]['transito'].toString(), "1", context);
                     },
                   ),
                 ]),

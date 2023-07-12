@@ -28,4 +28,34 @@ class Errores{
   errorReporte(context){
 
   }
+
+
+  Future<void> showAlertDialog2(context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          // <-- SEE HERE
+          title: const Text('Usuario o contraseña incorrectos'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Verfica tus datos.', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w800)),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Aceptar', style: TextStyle(fontWeight: FontWeight.w800)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+           
+          ],
+        );
+      },
+    );
+  }
 }

@@ -21,6 +21,8 @@ class IngresoManualControlador {
 
     var datos = await login.peticion(msg, 'adjudicar', context);
     var datoss = json.decode(datos);
+    print('jjjjjjjj');
+    print(datoss);
     if (bandera1 == 1) {
       if (datoss['transito'] == 1) {
         _showAlertDialog(context, 'Se adjudico con exito en transito');

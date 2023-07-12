@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:codigo_qr/transitoPiso.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toast/toast.dart';
 
 import 'LocalString/localString.dart';
 import 'conexion/conexion.dart';
@@ -57,6 +58,8 @@ class _loginState extends State<_login> {
   LocaleString tr =  LocaleString();
   bool bandera1 = false;
   bool bandera2 = false;
+          final _claveFormulario = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,120 +76,147 @@ class _loginState extends State<_login> {
           icon: const Icon(Icons.back_hand),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.only(left: 50, right: 50),
-          child: Column(children: [
-            const SizedBox(
-              height: 40,
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(tr.ejercicio,
-                  style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.cyanAccent[700],
-                    fontWeight: FontWeight.w800,
-                  ),
-                  textAlign: TextAlign.left),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextField(
-              controller: ejercicio,
-              keyboardType: TextInputType.number,
-              style: TextStyle(
-                color: Colors.cyanAccent[700],
+      body: Form(
+        key:_claveFormulario,
+        child: SingleChildScrollView(
+          child: Container(
+            margin: const EdgeInsets.only(left: 50, right: 50),
+            child: Column(children: [
+              const SizedBox(
+                height: 40,
               ),
-              decoration: InputDecoration(
-                hintText: tr.a,
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 3,
-                    color: Colors.purple,
-                  ),
-                ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(tr.ejercicio,
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.cyanAccent[700],
+                      fontWeight: FontWeight.w800,
+                    ),
+                    textAlign: TextAlign.left),
               ),
-            ),
-            const SizedBox(height: 30),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(tr.reporte,
-                  style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.cyanAccent[700],
-                    fontWeight: FontWeight.w800,
-                  )),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextField(
-              controller: numeroReporte,
-              decoration: InputDecoration(
-                hintText: tr.numero,
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 3,
-                    color: Colors.purple,
-                  ),
-                ),
+              const SizedBox(
+                height: 10,
               ),
-            ),
-            const SizedBox(height: 30),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                tr.afectado,
+              TextFormField(
+                 validator: (value) {
+            if (value!.isEmpty) {
+              return 'Ingresa ejercicio';
+            }
+            return null;
+          },
+                controller: ejercicio,
+                maxLength: 2,
+                keyboardType: TextInputType.number,
                 style: TextStyle(
-                  fontSize: 25,
                   color: Colors.cyanAccent[700],
-                  fontWeight: FontWeight.w800,
+                ),
+                decoration: InputDecoration(
+                  hintText: tr.a,
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 3,
+                      color: Colors.purple,
+                    ),
+                  ),
                 ),
               ),
-            ),
-            CheckboxListTile(
-              title: const Text('A'),
-              value: bandera1,
-              onChanged: (bool? value) {
-                setState(() {
-                  bandera1 = value!;
-                  bandera2 = false;
-                });
-              },
-            ),
-            CheckboxListTile(
-              title: const Text('T', style: TextStyle(fontSize: 20)),
-              value: bandera2,
-              onChanged: (bool? value) {
-                setState(() {
-                  bandera2 = value!;
-                  bandera1 = false;
-                });
-              },
-            ),
-            RaisedButton(
-              disabledColor: Colors.amber,
-              // ignore: sort_child_properties_last
-              child: Text(
-                tr.buscar,
-                style: const TextStyle(color: Colors.white),
+              const SizedBox(height: 30),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(tr.reporte,
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.cyanAccent[700],
+                      fontWeight: FontWeight.w800,
+                    )),
               ),
-              splashColor: Colors.amber,
-              color: Colors.purple,
-              onPressed: () {
-                peticionBusquedaManual(ejercicio, numeroReporte);
-              },
-            ),
-          ]),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                 validator: (value) {
+            if (value!.isEmpty) {
+              return 'Ingresa el numero de reporte';
+            }
+            return null;
+          },
+                controller: numeroReporte,
+                keyboardType: TextInputType.number,
+                maxLength: 7,
+                decoration: InputDecoration(
+                  hintText: tr.numero,
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 3,
+                      color: Colors.purple,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  tr.afectado,
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.cyanAccent[700],
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+              CheckboxListTile(
+                title: const Text('A'),
+                value: bandera1,
+                onChanged: (bool? value) {
+                  setState(() {
+                    bandera1 = value!;
+                    bandera2 = false;
+                  });
+                },
+              ),
+              CheckboxListTile(
+                title: const Text('T', style: TextStyle(fontSize: 20)),
+                value: bandera2,
+                onChanged: (bool? value) {
+                  setState(() {
+                    bandera2 = value!;
+                    bandera1 = false;
+                  });
+                },
+              ),
+              RaisedButton(
+                disabledColor: Colors.amber,
+                // ignore: sort_child_properties_last
+                child: Text(
+                  tr.buscar,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                splashColor: Colors.amber,
+                color: Colors.purple,
+                onPressed: () {
+                    if (!_claveFormulario.currentState!.validate()) {
+                    return;
+                  }else{
+                    peticionBusquedaManual(ejercicio, numeroReporte, context);
+                  }
+                  
+                },
+              ),
+            ]),
+          ),
         ),
       ),
     );
   }
 
-  peticionBusquedaManual(ejercicio, reporte) async {
-    String tipo = '';
+  peticionBusquedaManual(ejercicio, reporte,context) async {
+     int valor = int.parse(ejercicio.text);
+     print('//////////');
+      print(valor);
+    if(valor<=23){
+       String tipo = '';
     if (bandera1 == false) {
       tipo = 'T';
     } else {
@@ -198,5 +228,13 @@ class _loginState extends State<_login> {
     // EscanerQrControlador _buscarReporte = new EscanerQrControlador();
     // _buscarReporte.busquedaManual(
     //     ejercicio.text, reporte.text, tipo, usuario, context);
+    }else{
+ScaffoldMessenger.of(context)
+    .showSnackBar(const SnackBar(content: Text("El ejercicio debe ser menor a 23"), backgroundColor: Colors.purple, elevation: 10,));   // newMethod();
+    }
+  }
+
+  void showToast(String msg,) {
+    Toast.show(msg, duration: 10, );
   }
 }

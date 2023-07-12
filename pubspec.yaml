@@ -45,6 +45,8 @@ dependencies:
   qr_code_scanner: ^1.0.1
   internet_connection_checker: ^0.0.1+4
   elegant_notification: ^1.6.4
+  fluttertoast: ^8.2.2
+  toast: ^0.3.0
 
 
 dev_dependencies:

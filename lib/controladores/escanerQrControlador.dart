@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 import '../ingresoManual.dart';
 import '../peticiones/peticiones.dart';
-import '../userPreferences/userPrefrences.dart';
+import '../vistas/terceros.dart';
 
 class EscanerQrControlador{
 
@@ -28,34 +28,45 @@ final msg = jsonEncode({
         datos == '[]') {
 //displayAlert(context);
     } else {
-      UserPrefereces registro =  UserPrefereces();
-      registro.registroEncontrado(
-          datoss[0]['idExpediente'].toString(),
-          datoss[0]['codRamo'],
-          datoss[0]['ejercicio'],
-          datoss[0]['numReporte'],
-          datoss[0]['tipoRiesgo'],
-          datoss[0]['marca'],
-          datoss[0]['tipo'],
-          datoss[0]['modelo'],
-          datoss[0]['placas'],
-          datoss[0]['numSiniestro'],
-          datoss[0]['claveTaller'],
-          datoss[0]['numPoliza'],
-          datoss[0]['consecutivo'],
-          datoss[0]['idRiesgo'],
-          datoss[0]['transito'].toString(),
-          datoss[0]['piso'].toString(),
-          datoss[0]['idEstatusExpediente'],
-          datoss[0]['carrilExpres']);
+      print('lllllllllllllllllllll');
+      print(datoss.length);
+      if(datoss.length==1){
+  //UserPrefereces registro =  UserPrefereces();
+      // registro.registroEncontrado(
+      //     datoss[0]['idExpediente'].toString(),
+      //     datoss[0]['codRamo'],
+      //     datoss[0]['ejercicio'],
+      //     datoss[0]['numReporte'],
+      //     datoss[0]['tipoRiesgo'],
+      //     datoss[0]['marca'],
+      //     datoss[0]['tipo'],
+      //     datoss[0]['modelo'],
+      //     datoss[0]['placas'],
+      //     datoss[0]['numSiniestro'],
+      //     datoss[0]['claveTaller'],
+      //     datoss[0]['numPoliza'],
+      //     datoss[0]['consecutivo'],
+      //     datoss[0]['idRiesgo'],
+      //     datoss[0]['transito'].toString(),
+      //     datoss[0]['piso'].toString(),s
+      //     datoss[0]['idEstatusExpediente'],
+      //     datoss[0]['carrilExpres']);
           if(datoss[0]['transito'].toString()=='1' || datoss[0]['piso'].toString()=='1'){
               Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const Readjudicar()));
+          MaterialPageRoute(builder: (context) =>  Readjudicar(datoss: datoss,)));
           }else{
+            print(datoss[0]);
              Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const IngresoManual()));
-          }
-     
+          MaterialPageRoute(builder: (context) =>  IngresoManual(datoss: datoss,)));
+          }      }else{
+ print('lllllllll');
+     Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => Register(datoss: datoss,),
+  ),);
+      
+      }
     }
   }
 
@@ -70,28 +81,46 @@ final msg = jsonEncode({reporte});
         datos == '[]') {
 //displayAlert(context);
     }else{
-      UserPrefereces registro =  UserPrefereces();
-      registro.registroEncontrado(
-          datoss[0]['idExpediente'].toString(),
-          datoss[0]['codRamo'],
-          datoss[0]['ejercicio'],
-          datoss[0]['numReporte'],
-          datoss[0]['tipoRiesgo'],
-          datoss[0]['marca'],
-          datoss[0]['tipo'],
-          datoss[0]['modelo'],
-          datoss[0]['placas'],
-          datoss[0]['numSiniestro'],
-          datoss[0]['claveTaller'],
-          datoss[0]['numPoliza'],
-          datoss[0]['consecutivo'],
-          datoss[0]['idRiesgo'],
-          datoss[0]['transito'].toString(),
-          datoss[0]['piso'].toString(),
-          datoss[0]['idEstatusExpediente'],
-          datoss[0]['carrilExpres']);
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const IngresoManual()));
+      if(datoss.length==0){
+        if(datoss[0]['transito'].toString()=='1' || datoss[0]['piso'].toString()=='1'){
+              Navigator.push(context,
+          MaterialPageRoute(builder: (context) =>  Readjudicar(datoss: datoss,)));
+          }else{
+            print(datoss[0]);
+             Navigator.push(context,
+          MaterialPageRoute(builder: (context) =>  IngresoManual(datoss: datoss,)));
+          }   
+      }else{
+ print('lllllllll');
+     Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => Register(datoss: datoss,),
+  ),);
+      
+      }
+      // UserPrefereces registro =  UserPrefereces();
+      // registro.registroEncontrado(
+      //     datoss[0]['idExpediente'].toString(),
+      //     datoss[0]['codRamo'],
+      //     datoss[0]['ejercicio'],
+      //     datoss[0]['numReporte'],
+      //     datoss[0]['tipoRiesgo'],
+      //     datoss[0]['marca'],
+      //     datoss[0]['tipo'],
+      //     datoss[0]['modelo'],
+      //     datoss[0]['placas'],
+      //     datoss[0]['numSiniestro'],
+      //     datoss[0]['claveTaller'],
+      //     datoss[0]['numPoliza'],
+      //     datoss[0]['consecutivo'],
+      //     datoss[0]['idRiesgo'],
+      //     datoss[0]['transito'].toString(),
+      //     datoss[0]['piso'].toString(),
+      //     datoss[0]['idEstatusExpediente'],
+      //     datoss[0]['carrilExpres']);
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) =>  IngresoManual(datoss: datoss,)));
     } 
     }
 }
