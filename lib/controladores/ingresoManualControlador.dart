@@ -21,8 +21,8 @@ class IngresoManualControlador {
 
     var datos = await login.peticion(msg, 'adjudicar', context);
     var datoss = json.decode(datos);
-    print('jjjjjjjj');
-    print(datoss);
+    // print('jjjjjjjj');
+    // print(datoss);
     if (bandera1 == 1) {
       if (datoss['transito'] == 1) {
         _showAlertDialog(context, 'Se adjudico con exito en transito');
@@ -43,26 +43,29 @@ class IngresoManualControlador {
         return AlertDialog(
           // <-- SEE HERE
           title: Text(titulo),
-          content: SingleChildScrollView(
+          content: const SingleChildScrollView(
             child: ListBody(
-              children: const <Widget>[
-                Text('Desea adjudicar un nuevo vehiculo?', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w800)),
+              children: <Widget>[
+                Text('Desea adjudicar un nuevo vehiculo?',
+                    style:
+                        TextStyle(fontSize: 10, fontWeight: FontWeight.w800)),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('No', style: TextStyle(fontWeight: FontWeight.w800)),
+              child: const Text('No',
+                  style: TextStyle(fontWeight: FontWeight.w800)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: const Text('Si', style: TextStyle(fontWeight: FontWeight.w800)),
+              child: const Text('Si',
+                  style: TextStyle(fontWeight: FontWeight.w800)),
               onPressed: () {
-               
-   Navigator.push(
-          context, MaterialPageRoute(builder: (context) =>  const Registro()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Registro()));
               },
             ),
           ],

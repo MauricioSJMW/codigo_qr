@@ -20,7 +20,7 @@ class IngresoQr extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:const _login(),
+      home: const _login(),
     );
   }
 }
@@ -55,17 +55,17 @@ class _loginState extends State<_login> {
   String usuario = '';
   TextEditingController ejercicio = TextEditingController();
   TextEditingController numeroReporte = TextEditingController();
-  LocaleString tr =  LocaleString();
+  LocaleString tr = LocaleString();
   bool bandera1 = false;
   bool bandera2 = false;
-          final _claveFormulario = GlobalKey<FormState>();
+  final _claveFormulario = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(tr.ingresoManual),
-        backgroundColor: Colors.purple,
+        backgroundColor: const Color.fromARGB(255, 237, 182, 247),
         centerTitle: true,
         automaticallyImplyLeading: true,
         leading: IconButton(
@@ -77,7 +77,7 @@ class _loginState extends State<_login> {
         ),
       ),
       body: Form(
-        key:_claveFormulario,
+        key: _claveFormulario,
         child: SingleChildScrollView(
           child: Container(
             margin: const EdgeInsets.only(left: 50, right: 50),
@@ -99,12 +99,12 @@ class _loginState extends State<_login> {
                 height: 10,
               ),
               TextFormField(
-                 validator: (value) {
-            if (value!.isEmpty) {
-              return 'Ingresa ejercicio';
-            }
-            return null;
-          },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Ingresa ejercicio';
+                  }
+                  return null;
+                },
                 controller: ejercicio,
                 maxLength: 2,
                 keyboardType: TextInputType.number,
@@ -135,12 +135,12 @@ class _loginState extends State<_login> {
                 height: 10,
               ),
               TextFormField(
-                 validator: (value) {
-            if (value!.isEmpty) {
-              return 'Ingresa el numero de reporte';
-            }
-            return null;
-          },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Ingresa el numero de reporte';
+                  }
+                  return null;
+                },
                 controller: numeroReporte,
                 keyboardType: TextInputType.number,
                 maxLength: 7,
@@ -186,22 +186,20 @@ class _loginState extends State<_login> {
                   });
                 },
               ),
-              RaisedButton(
-                disabledColor: Colors.amber,
+              TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.purple),
                 // ignore: sort_child_properties_last
                 child: Text(
                   tr.buscar,
                   style: const TextStyle(color: Colors.white),
                 ),
-                splashColor: Colors.amber,
-                color: Colors.purple,
+
                 onPressed: () {
-                    if (!_claveFormulario.currentState!.validate()) {
+                  if (!_claveFormulario.currentState!.validate()) {
                     return;
-                  }else{
+                  } else {
                     peticionBusquedaManual(ejercicio, numeroReporte, context);
                   }
-                  
                 },
               ),
             ]),
@@ -211,30 +209,39 @@ class _loginState extends State<_login> {
     );
   }
 
-  peticionBusquedaManual(ejercicio, reporte,context) async {
-     int valor = int.parse(ejercicio.text);
-     print('//////////');
-      print(valor);
-    if(valor<=23){
-       String tipo = '';
-    if (bandera1 == false) {
-      tipo = 'T';
+  peticionBusquedaManual(ejercicio, reporte, context) async {
+    int valor = int.parse(ejercicio.text);
+    // print('//////////');
+    // print(valor);
+    if (valor <= 23) {
+      String tipo = '';
+      if (bandera1 == false) {
+        tipo = 'T';
+      } else {
+        tipo = 'A';
+      }
+      Conexion con = Conexion();
+      // ignore: unused_local_variable
+      var valor = con.verificarConexionBusqueda(
+          ejercicio.text, reporte.text, tipo, usuario, context);
+      // EscanerQrControlador _buscarReporte = new EscanerQrControlador();
+      // _buscarReporte.busquedaManual(
+      //     ejercicio.text, reporte.text, tipo, usuario, context);
     } else {
-      tipo = 'A';
-    }
-     Conexion con = Conexion();
-    // ignore: unused_local_variable
-    var valor= con.verificarConexionBusqueda(ejercicio.text, reporte.text, tipo, usuario, context);
-    // EscanerQrControlador _buscarReporte = new EscanerQrControlador();
-    // _buscarReporte.busquedaManual(
-    //     ejercicio.text, reporte.text, tipo, usuario, context);
-    }else{
-ScaffoldMessenger.of(context)
-    .showSnackBar(const SnackBar(content: Text("El ejercicio debe ser menor a 23"), backgroundColor: Colors.purple, elevation: 10,));   // newMethod();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("El ejercicio debe ser menor a 23"),
+        backgroundColor: Colors.purple,
+        elevation: 10,
+      )); // newMethod();
     }
   }
 
-  void showToast(String msg,) {
-    Toast.show(msg, duration: 10, );
+  void showToast(
+    String msg,
+  ) {
+    Toast.show(
+      msg,
+      duration: 10,
+    );
   }
 }

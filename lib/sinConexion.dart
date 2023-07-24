@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'LocalString/localString.dart';
 
 class SinConexion extends StatelessWidget {
-   const SinConexion({Key? key}) : super(key: key);
+  const SinConexion({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,25 +32,23 @@ class _loginState extends State<_login> {
   @override
   // ignore: must_call_super
   initState() {
-
     // ignore: avoid_print
     print("initState Called");
   }
 
-  
   TextEditingController email = TextEditingController();
   // ignore: prefer_final_fields, unused_field
   String _barcode = "";
   TextEditingController password = TextEditingController();
-    LocaleString tr =  LocaleString();
+  LocaleString tr = LocaleString();
   @override
   Widget build(BuildContext context) {
     // ignore: avoid_unnecessary_containers
     return Container(
       child: Scaffold(
         appBar: AppBar(
-          title:  Text(tr.sinCon),
-          backgroundColor: Colors.purple,
+          title: Text(tr.sinCon),
+          backgroundColor: const Color.fromARGB(255, 237, 182, 247),
           automaticallyImplyLeading: false,
           centerTitle: true,
         ),
@@ -68,30 +66,32 @@ class _loginState extends State<_login> {
                   height: 190,
                 ),
                 const SizedBox(height: 10),
-                 Text(tr.noCon,
+                Text(tr.noCon,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w800,
                     )),
-                    Text(tr.favVer,
+                Text(tr.favVer,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w800,
-                    ), textAlign:TextAlign.center),
-                    const SizedBox(height: 20,),
-                    RaisedButton(
-                  disabledColor: Colors.amber,
+                    ),
+                    textAlign: TextAlign.center),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(backgroundColor: Colors.purple),
                   // ignore: sort_child_properties_last
-                  child:  Text(
+                  child: Text(
                     tr.aceptar,
-                    style:  const TextStyle(
+                    style: const TextStyle(
                         color: Colors.white, fontWeight: FontWeight.w900),
                   ),
-                  splashColor: Colors.amber,
-                  color: Colors.purple,
-                  onPressed: () async{
-                   Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const  MyApp()));
+
+                  onPressed: () async {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const MyApp()));
                   },
                 ),
               ]),
@@ -100,5 +100,5 @@ class _loginState extends State<_login> {
         ),
       ),
     );
-  }  
+  }
 }

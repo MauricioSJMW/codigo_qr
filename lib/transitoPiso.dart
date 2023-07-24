@@ -56,17 +56,17 @@ class _loginState extends State<_login> {
   // ignore: prefer_final_fields, unused_field
   String _barcode = "";
   TextEditingController password = TextEditingController();
-    LocaleString tr =  LocaleString();
+  LocaleString tr = LocaleString();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(tr.tipRegis),
-        backgroundColor: Colors.purple,
+        title: Text(tr.tipRegis),
+        backgroundColor: const Color.fromARGB(255, 237, 182, 247),
         automaticallyImplyLeading: false,
         centerTitle: true,
         leading: IconButton(
-          onPressed: ()async {
+          onPressed: () async {
             UserPrefereces cerrar = UserPrefereces();
             cerrar.cerrarSecion(context);
           },
@@ -87,7 +87,7 @@ class _loginState extends State<_login> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 15),
-               Text(
+              Text(
                 tr.ingreUnidad,
                 style: const TextStyle(
                   fontSize: 25,
@@ -96,7 +96,7 @@ class _loginState extends State<_login> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 60),
-               Text(
+              Text(
                 tr.escanerQr,
                 style: const TextStyle(
                   fontSize: 20,
@@ -116,7 +116,7 @@ class _loginState extends State<_login> {
                 },
               ),
               const SizedBox(height: 10),
-               Text(tr.regManual,
+              Text(tr.regManual,
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w800,
@@ -138,5 +138,5 @@ class _loginState extends State<_login> {
         ),
       ),
     );
-  }  
+  }
 }
